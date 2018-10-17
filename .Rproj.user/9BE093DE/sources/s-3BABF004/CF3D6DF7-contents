@@ -29,7 +29,6 @@ suppressPackageStartupMessages({
 ```
 
 
-
 The stock of a renewable resource has the following equation of motion:
 
 $$
@@ -41,8 +40,11 @@ Where $y_t \equiv x_t - h_t$ is the residual stock in period $t$, determined by 
 Since $p = 1$ and we have no costs, payoff $\pi(h_t) = h_t$. Our harvest is not influenced by stock size, therefore the period-$t$ Dynamic Optimization Problem is given by:
 
 $$
+\begin{split}
 \max_{h_t} \sum_{t = 0}^T\delta^th_t\\
+\\
 \rm{s.t.}\ x_{t+1} = f(y_t)
+\end{split}
 $$
 
 # Period-$t$ dynamic programming equation
@@ -175,7 +177,7 @@ At period T, my DPE is:
 $$
 \begin{split}
 V_t(x_t) &= \max_{h_t} \left[ ph_t + \delta V_{t+1}(x_{t+1}) \right] \\
-&= \max_{h_t} \left[ ph_t + 0) \right] \\
+&= \max_{h_t} \left[ ph_t + 0 \right] \\
 \end{split}
 $$
 
