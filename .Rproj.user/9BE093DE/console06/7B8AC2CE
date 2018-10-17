@@ -1,0 +1,23 @@
+[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git r[0K[?25he[0Km[0Kot[0Ke[0K[14G[?25l$ git remote r[0K[?25hm[0K[17G[?25l$ git remote rm o[0K[?25hr[0Ki[0Kg[0Ki[0Kn[0K[?25l
+[0K[?25h[?25l
+[0;32mJC@LAPTOP-SKCMSUPK [0;35m [0;33m~/Dropbox (Personal)/Escuela/4PhD/5Fall18/ECON260A[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ git remote rm origin[0K[?25h[?25l$ git remote add origin https://github.com/jcvdav/ECON260A[0K[?25h.[0Kg[0Ki[0Kt[0K[?25l
+[0K[?25h[?25l
+[0;32mJC@LAPTOP-SKCMSUPK [0;35m [0;33m~/Dropbox (Personal)/Escuela/4PhD/5Fall18/ECON260A[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git p[0K[?25hu[0Ks[0Kh[0K[12G[?25l$ git push -[0K[?25h[?25lu[0K[13G[?25h[14G[15G[?25l$ git push -u o[0K[?25hr[0Ki[0Kg[0Ki[0Kn[0K[22G[?25l$ git push -u origin m[0K[?25ha[0Ks[0Kt[0Ke[0Kr[0K[?25l
+[0K[?25hCounting objects: 3, done.[0K[?25l
+Delta compression using up to 4 threads.[0K
+Compressing objects:  50% (1/2)[0K[1G[?25hCompressing objects: 100% (2/2), done.[0K[?25l
+Writing objects: 100% (3/3), 663 bytes | 663.00 KiB/s, done.[0K
+Total 3 (delta 0), reused 0 (delta 0)[0K
+[0K[?25hremote:[0K[?25l
+remote: Create a pull request for 'master' on GitHub by visiting:[0K
+remote:      https://github.com/jcvdav/ECON260A/pull/new/master[0K
+remote:[0K
+To https://github.com/jcvdav/ECON260A.git[0K
+ * [new branch]      master -> master[0K
+Branch 'master' set up to track remote branch 'master' from 'origin'.[0K[1G[?25h[?25l
+[0K[?25h[?25l
+[0;32mJC@LAPTOP-SKCMSUPK [0;35m [0;33m~/Dropbox (Personal)/Escuela/4PhD/5Fall18/ECON260A[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git a[0K[?25hd[0Kd[0K[11G[?25l$ git add -[0K[?25hA[0K[?25l
+[0K[?25h

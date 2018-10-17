@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1539808168743.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "E55DB62A",
+    "lastKnownWriteTime" : 1539811231,
+    "last_content_update" : 1539811231173,
+    "path" : "C:/Users/JC/Dropbox (Personal)/Escuela/4PhD/5Fall18/ECON260A/scripts/hw1/sens_plot.R",
+    "project_path" : "scripts/hw1/sens_plot.R",
+    "properties" : {
+        "cursorPosition" : "6,18",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

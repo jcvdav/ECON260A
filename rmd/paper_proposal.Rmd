@@ -1,0 +1,45 @@
+---
+title: "Ecological interactions and private management of invasive species"
+subtitle: "ECON 260A - Final Paper Proposal"
+author: "Villaseñor-Derbez J.C.[^*]"
+output:
+    bookdown::pdf_document2:
+      toc: no
+      citation_package: natbib
+      number_sections: no
+bibliography: references.bib
+biblio-style: apalike
+---
+
+[^*]: Bren School of Environmental Science and Management, UC Santa Barbara
+
+# Background
+
+Invasive species threaten native biodiversity and can have large economic impacts \citep{bax_2003}. At least 84% of marine eco-regions have reported the presence of an invasive species \citep{molnar_2008} and in 2005, the economic cost of invasive species to the United States was estimated at USD \$120 billion per year \citep{pimentel_2005}. While these numbers may vary across ecosystems and countries, they highlight the management-relevance of invasive species control.
+
+The economic literature on invasive species management can be roughly split into prevention, control, and more recently detection[^1]. The prevention literature argues that regulations put in place to lower the risk of invasions are more efficient. The control literature sates that monitoring invasive populations and implementing culling programs are a better strategy. Lastly, the detection literature suggests that, depending on the species' detectability, it may be optimal to allocate resources for early detection, where culling has the largest marginal effect on the small invasive population \citep{mehta_2007}[^2]. The reality is that there is no single best strategy to manage invasive species (or their risk of invading), and that proper interventions depend on existing institutions and ecological characteristics of the species and system \citet{lovell_2006}. Integrating the environmental, social, and economic aspects of an invasion might help identify alternative feasible management strategies \citep{larson_2011}.
+
+[^1]: This might not be the case, but it is what I've been able to see in the brief literature review that I've done over the last week. However, \citet{mehta_2007} says: "Previous literature has focused largely on preventing introductions of invasive species and post-detection control activities; few have addressed the role of detection" which partly supports what I've seen so far.
+
+[^2]: Regulations prevent invasions can impose a toll in trade and transport, often making them undesirable. Control approaches are often deemed as last resource reactive strategies. Detection efforts reduce the burden of limiting trade and / or transportation, strategies often cited in the prevention literature \citep{evans_2003}.
+
+The damages caused by invasive species are often public and call for government intervention \citep{lovell_2006}. However, property rights can internalize the impacts and create an incentive for private control of invasive species. Invasive species commonly have negative impacts on native species through predation, competition, or other indirect effects \citep{davis_2003, gurevitch_2004}. If impacted species provide benefits through harvesting (*i.e.* a commercially valuable fish stock) or non-consumptive use values (*i.e.* recreational diving), resource users may have an incentive to manage the invasion in order to minimize losses.
+
+# Proposed paper
+
+My paper aims to explore settings under which private interests may provide an incentive for species management. More specifically, I intend to explore a case where a market for the invasive species exist, and where the abundance of the invasive species has direct negative impacts on a commercially valuable species. My bioeconomic model would combine a discrete-time predator-prey population model to describe the invasive (predator) and native species (prey) dynamics, and where resource users operate under property rights and receive benefits through harvesting and selling both species.
+
+The growth function of each species would depend on current population size, harvest, and population size of the other species (*i.e.* predator-prey interaction). This way, the benefits of controlling the invasive population are perceived by increased population sizes of the native species due to the reduction in predation.
+
+<!-- # Contribution -->
+
+<!-- # Saved chunks -->
+
+<!-- For example, \citet{costello_2017} explore the private eradication of mobile public bads. They show that high mobility and low control by adjacent private agents results in lower private control. -->
+<!-- Invasive species pose a particularly difficult management problem due to their renewable resource characteristics. -->
+<!-- Invasive species may be mobile, are a renewable resource, erradication is costly, but control might be optimum. -->
+
+
+<!-- \citep{kling_2017} -->
+
+\clearpage

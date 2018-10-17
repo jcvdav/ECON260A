@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1539808128407.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "626455815",
+    "id" : "1867D1D0",
+    "lastKnownWriteTime" : 1539809766,
+    "last_content_update" : 1539809766463,
+    "path" : "C:/Users/JC/Dropbox (Personal)/Escuela/4PhD/5Fall18/ECON260A/scripts/hw1/sensitivity.R",
+    "project_path" : "scripts/hw1/sensitivity.R",
+    "properties" : {
+        "cursorPosition" : "18,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
