@@ -1,5 +1,5 @@
 ---
-title: "Homework Challenge #1"
+title: "Homework Challenge #1[^*]"
 subtitle: "ECON 260A"
 author: "Villaseñor-Derbez, J.C."
 date: "Compiled on `r date()` by `r Sys.info()['user']`"
@@ -14,10 +14,13 @@ header-includes:
 # bibliography: references.bib
 ---
 
+[^*]: Code for this assignment is available on GitHub: [https://github.com/jcvdav/ECON260A](https://github.com/jcvdav/ECON260A)
+
 ```{r, echo = F}
 knitr::opts_chunk$set(echo = FALSE,
                       message = FALSE,
-                      warning = FALSE)
+                      warning = FALSE,
+                      eval = T)
 
 suppressPackageStartupMessages({
   library(startR)
@@ -116,6 +119,7 @@ This says that in period $T-1$ my value is given by this period's harvest ($h^*_
 $$
 V_{T-1}(x_{T-1}) = x_{T-1} + A
 $$
+
 ## Period-$T-2$
 
 If we go back to the third-to-last period, the DPE is given by:
@@ -177,7 +181,7 @@ $$
 
 Which has first order condition of $h^*_T = xT$ leading to a value function with the form $$V_T(x_T) = px_T $$.
 
-## Period-$T-1$:
+## Period-$T-1$
 
 $$
 \begin{split}
@@ -197,6 +201,7 @@ $$
 \frac{1}{\delta} &= f'(y^*_t)
 \end{split}
 $$
+
 Yielding a value function of
 
 $$
@@ -208,6 +213,8 @@ V_{T-1}(x_{T-1}) &= ph^*_{T-1} + \delta f'(y^*_{T-1}) \\
 $$
 
 Where $\gamma = -py^*_{T-1} + \delta f'(y^*_{T-1})$
+
+## Period-$T-2$
 
 Going back to $T-2$ I should see this hold:
 
@@ -222,6 +229,8 @@ V_{T-2}(x_{T-2}) &= \max_{h_{T-2}} \left[ ph_{T-2} + \delta V_{T-1}(x_{T-1}) \ri
 $$
 
 Maximizng the above does not include $p$ (it's only present as a constant $\frac{\gamma}{p}$), which indicates that the policy function is independent of a *constant* price $p$. If price were a function of $h_t$ or $x_t$ this would likely need a different optimization approach.
+
+\clearpage
 
 # Non-linear payoff function
 
@@ -251,9 +260,32 @@ $$
 
 This form shows that the grwoth rate of the optimal residual stock $f'(y^*_t)$ is not a constant as before, but that it depends on the optimal level of harvest $h^*t$ multiplied by a constant $\Omega = \frac{\alpha + 2\beta}{\delta \phi}$. In this case, the state is linear in the DPE.
 
+\clearpage
+
 # Numerical solution to stochastic evolution in stock
 
-In a deterministic scenario, the current payoff function allows us derive the policy and value functions with a numerical approach. Figure \ref{fig:deterministic} shows how every time I take a step back (indicated by colors) the policy and value function converge. The policy function takes about 11 steps to visually converge, while the value function takes much more. 
+In a deterministic scenario, the current payoff function allows us derive the policy and value functions with a numerical approach. I first solve a stochastic version of the problem to make sure my code works and so I can draw some intuition about the problem. Figure \ref{fig:deterministic} shows how every time I take a step back (indicated by colors) the policy and value function converge. The policy function takes about 11 steps to visually converge, while the value function takes much more.
+
+Now, this might change once we account for the stochastic growth in our stock ($x_{t+1} = zf(y_t) = zf(x_t - h_t)$), determined by a stochastic term:
+
+$$
+z = \begin{cases}
+  \textrm{if } p < 0.5 \textrm{ then } 1+\theta \\
+  \textrm{if } p > 0.5 \textrm{ then } 1 - \theta
+\end{cases}
+$$
+where $p = B(n =1, p = 0.5)$
+
+My initial thought was that since each state has equal probability of ocurring, on average they would cancel out such that the optimal policy function would be the average of the two states. I expected the average of extreme policy functions to be equal to the deterministic path, so I ran three simulations using $z = {0.7, 1, 1.3}$, shown in Figure \ref{fig:stochastic}. This shows how the optimal deterministic policy function is the same as when $z > 1$ for low values of X. On the opposite side, the optimal deterministic policy function is the same as when $z < 1$ for high values of X. This suggests that the timing of positive or negative stochastic events has different influences depending on the state of the resource and the time period in which we are. Furthermore, two or more consecutive negative shocks have a greater marginal effect on $x$ than two or more consecutive positive shocks.
+
+To inspect the relationship between $\theta$, $r$, $\delta$ and $\alpha$ I will do the following:
+
+- Define a space for parameters, where the default value used before is centered
+- Hold all other parameters constant at the default values
+- Run all possible combinations of Xgrid and the parameter of interest
+- Create surface plots and h(x) plots for visual inspection
+
+Figure \ref{fig:sens_z} shows the relationship between $\theta$ (represented by $z$) and the policy function. We see that, all else constant, values of $z > 1$ result in higher levels of harvest for population sizes $X > 15$, while values of $z < 1$ lead to overall lower optimal harvest across a range of $X$. Figure \ref{fig:sens_r} shows the relationship between the intrinsic population growth rate ($r$) and the policy function. The differences are not as observable as before, but it is evident that higher values of $r$ lead to larger harvests, even for smaller stock sizes as compared to low $r$ values. Figure \ref{fig:sens_delta} shows the relationship between $\delta$ and the policy function. Higher discount factors lead to lower optimum harvests across all stock sizes. These differences are particularly large toward small population sizes, where a high discount factor may result in effectively no harvest for small populations. Finally, Figure \ref{fig:sens_a} shows the relationship between $\alpha$ and the policy function. The relationship seems to be quite uniform across a range of small (*i.e.* $X_t < K/2$) stock sizes. However, as the stock grows, larger values of $\alpha$ lead to larger optimum harvests.
 
 ```{r}
 # Source my objective function
@@ -274,18 +306,7 @@ call_dof() %>%
   ggtheme_plot()
 ```
 
-Now, this might change once we account for the stochastic growth in our stock ($x_{t+1} = zf{x_t}$), determined by a stochastic term:
 
-$$
-z = \begin{cases}
-  \textrm{if } p < 0.5 \textrm{ then } 1+\theta \\
-  \textrm{if } p > 0.5 \textrm{ then } 1 - \theta
-\end{cases}\\
-\textrm{and} \\
-p = B(n =1, p = 0.5)
-$$
-
-My initial thought was that since each state has equal probability of ocurring, on average they would cancel out such that the optimal policy function would be the average of the two states. However, \ref{fig:stochastic} shows how the optimal deterministic policy function is the same as when $z > 1$ for low values of X. On the opposite side, the optimal deterministic policy function is the same as when $z < 1$ for high values of X. This suggests that the timing of positive or negative stochastic events has different influences depending on the state of the resource and the time period in which we are.
 
 ```{r, fig.height = 3, fig.width = 6, fig.cap = "\\label{fig:stochastic}Comparison of running three different scenarios, where z = {0.7, 1, and 1.3} throughout the entire simulation."}
 runs <- call_dof(z = 1) %>% 
@@ -307,19 +328,10 @@ ggplot(data = runs, mapping = aes(x = Xgrid, y = harvest_opt)) +
   ggtheme_plot()
 ```
 
-To inspect the relationship between $\theta$, $r$, $\delta$ and $\alpha$ I will do the following:
-
-- Define a space for parameters, where the default value used before is centered
-- Hold all other parameters constant at the default values
-- Run all possible combinations of Xgrid and the parameter of interest
-- Create surface plots and h(x) plots for visual inspection
-
 ```{r}
 source(here::here("scripts", "hw1", "sensitivity.R"))
 source(here::here("scripts", "hw1", "sens_plot.R"))
 ```
-
-Figure \ref{fig:sens_z} shows the relationship between $\theta$ (represented by $z$) and the harvest policy. We see that, all else constant, values of $z > 1$ result in higher levels of harvest for lower stock sizes for population sizes $X > 15$, while values of $z < 1$ lead to overall lower optimal harvest across a range of $X$. Figure \ref{fig:sens_r} shows the relationship between the intrinsic population growth rate ($r$) and the harvest rule. The differences are not as observable as before, but it is evident that higher values of $r$ lead to larger harvests, even for smaller stock sizes as compared to low $r$ values. Figure \ref{fig:sens_delta} shows the relationship between $\delta$ and the policy function. Higher discount factors lead to lower optimum harvests across all stock sizes. These differences are particularly large toward small population sizes, where a high discount factor may result in effectively no harvest for small populations. Finally, Figure \ref{fig:sens_a} shows the relationship between $\alpha$ and the policy function. The relationship seems to be quite uniform across a range of small (*i.e.* $X_t < K/2$) stock sizes. However, as the stock grows, larger values of $\alpha$ lead to larger optimum harvests.
 
 ```{r, fig.cap = "\\label{fig:sens_z}Relationship between z and the policy function. A shows the surface of h* for a combination of X and z. B shows the h(X) with colors for different parameter values."}
 sensitivity(min = 0.5, max = 1.5, num = 10, par = "z") %>% 
@@ -344,10 +356,9 @@ sensitivity(min = 15, max = 25, num = 10, par = "a") %>%
 ```
 
 
-
 # Project into the future
 
-```{r, fig.cap = "10 simulations for 20 periods. Each simulation is plotted in the background with a different color. The solid dark line represents the mean, and the dashed lines the 1 SD space around the mean."}
+```{r, fig.cap = "100 simulations for 20 periods. Each simulation is plotted in the background with a different color. The solid dark line represents the mean, and the dashed lines the 1 SD space around the mean. The solid red line represents the optimal path in a deterministic scenario."}
 #Grid over state space
 
 #Define some parameters for each call_dof
@@ -422,6 +433,32 @@ for (sim in 1:nsims){
   results <- rbind(results, sim_results)
 }
 
+for (tt in 1:T_fin){
+  HHtmp <- spline(Xgrid, Hstar[,tt] , xout = XX[tt] , method = "natural") #Interpolate to find harvest
+  
+  HH[tt] <- HHtmp$y #Use interpolated harvest in period 
+  
+  z <- 1
+  
+  XX[tt+1] <- z * (XX[tt]-HH[tt]) + r*(XX[tt]-HH[tt])*(1-(XX[tt]-HH[tt])/K)
+  
+  # Calculate profits
+  Pi[tt] <- a*HH[tt] - b*(HH[tt]^2)
+  
+  # Discount it
+  Pipv[tt] <- (delta^tt)*Pi[tt]
+}
+
+deter <- data.frame(sim = sim,
+                    time = simtime,
+                    X = XX[1:T_fin],
+                    H = HH,
+                    Profit = Pi,
+                    PVProfit = Pipv) %>%
+  select(sim, time, X, H) %>%
+  gather(variable, value, -c(time, sim)) %>% 
+  arrange(sim, time, variable)
+
 mean_sd <- function(x){
   data.frame(y = mean(x)) %>% 
     mutate(ymin = y - sd(x),
@@ -437,6 +474,7 @@ results %>%
   geom_line(aes(group = sim, color = sim), alpha = 0.5) +
   stat_summary(geom = "ribbon", fun.data = mean_sd, alpha = 0.1, color = "black", linetype = "dashed") +
   stat_summary(geom = "line", fun.y = mean, color = "black", size = 1) +
+  geom_line(data = deter, color = "red", size = 1) +
   theme_minimal() +
   scale_color_gradientn(colours = colorRamps::matlab.like(50)) +
   facet_wrap(~variable, scales = "free_y", ncol = 1)
