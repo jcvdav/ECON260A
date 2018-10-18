@@ -5,7 +5,7 @@ sensitivity <- function(min, max, num, par = "r"){
   results <- data.frame()
   
   for(i in 1:num){
-    run_i <- eval(parse(text = paste0("call(", par, "=", parameter[i], ")"))) %>% 
+    run_i <- eval(parse(text = paste0("call_dof(", par, "=", parameter[i], ")"))) %>% 
       filter(T_end == 29) %>% 
       mutate(par = parameter[i])
     
