@@ -1,45 +1,65 @@
-[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git a[0K[?25hd[0K[10G[9G[?25l$ git add[0K[9G[?25h[10G[11G[?25l$ git add -[0K[?25hA[0K[?25l
-[0K[?25hwarning: LF will be replaced by CRLF in .Rproj.user/9BE093DE/sources/prop/FC92F12D.[0K[?25l
-The file will have its original line endings in your working directory.[0K
-warning: LF will be replaced by CRLF in .Rproj.user/9BE093DE/sources/s-3BABF004/CF3D6DF7.[0K
-The file will have its original line endings in your working directory.[0K
-warning: LF will be replaced by CRLF in .Rproj.user/9BE093DE/sources/s-3BABF004/CF3D6DF7-contents.[0K
-The file will have its original line endings in your working directory.[0K
-[0K[?25h[?25l
-[0;32mJC@LAPTOP-SKCMSUPK [0;35m [0;33m~/Dropbox (Personal)/Escuela/4PhD/5Fall18/ECON260A[0;36m (master)[0m[0K
-$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git c[0K[?25ho[0Km[0Km[0Ki[0Kt[0K[14G[?25l$ git commit -[0K[?25hm[0K[17G[?25l$ git commit -m "[0K[?25hF[0Ki[0Kn[0Ka[0Kl[0Ki[0K[?25l$ git commit -m "Final[0K[?25h[?25l$ git commit -m "Fina[0K[?25h[?25l$ git commit -m "Fin[0K[?25h[?25l$ git commit -m "Fi[0K[21G[?25h[20G[?25l$ git commit -m "F[0K[?25h[?25l$ git commit -m "[0K[19G[?25h[18G[?25l$ git commit -m "I[0K[?25h[20G[?25l$ git commit -m "I t[0K[?25hh[0Ki[0Kn[0Kk[0K[26G[?25l$ git commit -m "I think I[0K[?25hm[0K[29G[?25l$ git commit -m "I think Im d[0K[?25h[?25lo[0K[30G[?25h[31G[?25l$ git commit -m "I think Im don[0K[?25he[0K"[0K[?25l
-[0K[?25h[master 8594155] I think Im done[0K[?25l
- 9 files changed, 146 insertions(+), 90 deletions(-)[0K
- rewrite .Rproj.user/9BE093DE/console06/7B8AC2CE (100%)[0K
-[0K[?25h[?25l
-[0;32mJC@LAPTOP-SKCMSUPK [0;35m [0;33m~/Dropbox (Personal)/Escuela/4PhD/5Fall18/ECON260A[0;36m (master)[0m[0K
-$ g[0K[?25hi[0Kt[0K[7G[?25l$ git p[0K[7G[?25h[8G[?25l$ git pu[0K[?25hs[0Kh[0K[?25l
-[0K[?25hCounting objects: 23, done.[0K[?25l
-[0K[?25hDelta compression using up to 4 threads.[0K[?25l
-Compressing objects: 100% (20/20), done.[0K
-Writing objects:  86% (20/23)[0K[1G[?25hWriting objects: 100% (23/23), 144.36 KiB | 6.01 MiB/s, done.[0K[?25l
-Total 23 (delta 11), reused 0 (delta 0)[0K
-[0K[?25hremote: Resolving deltas:  45% (5/11)[0K[41G[?25lremote: Resolving deltas: 100% (11/11), completed with 11 local objects.[0K
-[0K[?25hTo https://github.com/jcvdav/ECON260A.git[0K[?25l
-   5283041..8594155  master -> master[0K
-[0K[?25h[?25l
-[0;32mJC@LAPTOP-SKCMSUPK [0;35m [0;33m~/Dropbox (Personal)/Escuela/4PhD/5Fall18/ECON260A[0;36m (master)[0m[0K
-$[0K[3G[?25h[?25l[18A[0;32mJC@LAPTOP-SKCMSUPK [0;35m [0;33m~/Dropbox (Personal)/Escuela/4PhD/5Fall18/ECON260A[0;36m (master)[0K
-[0m$ git commit -m "I think Im done"[0K
-[master 8594155] I think Im done[0K
- 9 files changed, 146 insertions(+), 90 deletions(-)[0K
- rewrite .Rproj.user/9BE093DE/console06/7B8AC2CE (100%)[0K
+[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git s[0K[?25ht[0Ka[0Kt[0Ku[0Ks[0K[?25l
+[0K[?25hOn branch master[0K[?25l
+Your branch is up to date with 'origin/master'.[0K
 [0K
-[0;32mJC@LAPTOP-SKCMSUPK [0;35m [0;33m~/Dropbox (Personal)/Escuela/4PhD/5Fall18/ECON260A[0;36m (master)[0K
-[0m$ git push[0K
-Counting objects: 23, done.[0K
-Delta compression using up to 4 threads.[0K
-Compressing objects: 100% (20/20), done.[0K
-Writing objects: 100% (23/23), 144.36 KiB | 6.01 MiB/s, done.[0K
-Total 23 (delta 11), reused 0 (delta 0)[0K
-remote: Resolving deltas: 100% (11/11), completed with 11 local objects.[0K
-To https://github.com/jcvdav/ECON260A.git[0K
-   5283041..8594155  master -> master[0K
+Changes to be committed:[0K
+  (use "git reset HEAD <file>..." to unstage)[0K
 [0K
-[0;32mJC@LAPTOP-SKCMSUPK [0;35m [0;33m~/Dropbox (Personal)/Escuela/4PhD/5Fall18/ECON260A[0;36m (master)[0K
-[0m$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git a[0K[?25hd[0Kd[0K[?25l$ git ad[0K[?25h[?25l$ git a[0K[?25h[?25l$ git[0K[7G[?25h[?25l$ git c[0K[?25ho[0Km[0Km[0Ki[0Kt[0K[14G[?25l$ git commit -[0K[?25hm[0K[?25l$ git commit -[0K[?25ha[0K[17G[?25l$ git commit -a -[0K[?25hm[0K[20G[?25l$ git commit -a -m "[0K[?25hN[0Ko[0Kw[0K[25G[?25l$ git commit -a -m "Now I[0K[?25hm[0K[28G[?25l$ git commit -a -m "Now Im d[0K[?25ho[0Kn[0Ke[0K"[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/console06/7B8AC2CE[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/console06/INDEX001[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/pcs/files-pane.pper[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/pcs/source-pane.pper[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/pcs/windowlayoutstate.pper[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/pcs/workbench-pane.pper[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/persistent-state[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/rmd-outputs[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/saved_source_markers[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/prop/1F24CD1E[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/prop/23E745FD[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/prop/30230ACF[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/prop/31FF70ED[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/prop/3ADFC07F[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/prop/55C0EABF[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/prop/84DDA5DA[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/prop/F310554D[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/prop/FC92F12D[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/prop/INDEX[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/s-3BABF004/1867D1D0-contents[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/s-3BABF004/3BAF779D-contents[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/s-3BABF004/7C6C64D5-contents[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/s-3BABF004/85D05E18[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/s-3BABF004/85D05E18-contents[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/s-3BABF004/A1D52F2E[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/s-3BABF004/A1D52F2E-contents[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/s-3BABF004/CF3D6DF7[0m[0K[9G[?25h[?25l
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/s-3BABF004/CF3D6DF7-contents[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/s-3BABF004/E55DB62A-contents[0m[0K
+        [0;32mdeleted:    .Rproj.user/9BE093DE/sources/s-3BABF004/lock_file[0m[0K
+        [0;32mdeleted:    .Rproj.user/shared/notebooks/411222E5-paper_proposal/1/9BE093DE6624B54E/chu[0Kn
+ks.json[0m[0K
+        [0;32mdeleted:    .Rproj.user/shared/notebooks/411222E5-paper_proposal/1/9BE093DEC2D1CAD4/chu[0Kn
+ks.json[0m[0K
+        [0;32mdeleted:    .Rproj.user/shared/notebooks/411222E5-paper_proposal/1/s/chunks.json[0m[0K
+        [0;32mdeleted:    .Rproj.user/shared/notebooks/86BA04E2-Assig1/1/9BE093DE3BABF004/chunks.json[0m[0K
+        [0;32mdeleted:    .Rproj.user/shared/notebooks/86BA04E2-Assig1/1/9BE093DE55354233/chunks.json[0m[0K
+        [0;32mdeleted:    .Rproj.user/shared/notebooks/86BA04E2-Assig1/1/9BE093DE6624B54E/chunks.json[0m[0K
+        [0;32mdeleted:    .Rproj.user/shared/notebooks/86BA04E2-Assig1/1/s/cblbb91gfpam8/000002.metad[0Ka
+ta[0m[0K
+        [0;32mdeleted:    .Rproj.user/shared/notebooks/86BA04E2-Assig1/1/s/cblbb91gfpam8/000002.png[0m[0K
+        [0;32mdeleted:    .Rproj.user/shared/notebooks/86BA04E2-Assig1/1/s/cblbb91gfpam8/000002.snaps[0Kh
+ot[0m[0K
+        [0;32mdeleted:    .Rproj.user/shared/notebooks/86BA04E2-Assig1/1/s/chunks.json[0m[0K
+        [0;32mdeleted:    .Rproj.user/shared/notebooks/86BA04E2-Assig1/1/s/cjieczkihg8hh/000002.csv[0m[0K
+        [0;32mdeleted:    .Rproj.user/shared/notebooks/86BA04E2-Assig1/1/s/cjieczkihg8hh/000003.error[0m[0K
+        [0;32mdeleted:    .Rproj.user/shared/notebooks/patch-chunk-names[0m[0K
+        [0;32mdeleted:    .Rproj.user/shared/notebooks/paths[0m[0K
+[0K
+Untracked files:[0K
+  (use "git add <file>..." to include in what will be committed)[0K
+[0K
+        [0;31m.Rproj.user/[0m[0K
+[0K
+[0K[?25h[?25l
+[0;32mJC@LAPTOP-SKCMSUPK [0;35m [0;33m~/Dropbox (Personal)/Escuela/4PhD/5Fall18/ECON260A[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git a[0K[7G[?25h[8G[?25l$ git ad[0K[?25h[?25ld[0K[9G[?25h[10G[11G[?25l$ git add -[0K[?25hA[0K[?25l
+[0K[?25h
