@@ -1,0 +1,152 @@
+---
+title: "Homework Challenge #2"
+subtitle: "ECON 260A"
+author: "Villaseñor-Derbez, J.C."
+date: "`r Sys.Date()`"
+output:
+    bookdown::pdf_document2:
+        toc: no
+        number_sections: false
+header-includes:
+  - \usepackage{float}
+  - \floatplacement{figure}{H}
+  # - \usepackage{natbib}
+# bibliography: references.bib
+---
+
+```{r, echo = F}
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      eval = T)
+
+suppressPackageStartupMessages({
+  library(startR)
+  library(tidyverse)
+})
+```
+
+# Problem
+
+An exhaustible resource is costlessly extracted in continuous time by competitive firms (assume all other assumptions of the Hotelling model apply). The market inverse demand curve is $p(y) = a - by(t)$ where $p(t)$ and $y(t)$ denote the price and quantity in time $t$ and $a$ and $b$ are finite parameters. The initial stock of the resource is given by $x(0) = x_0$, the interest rate is $r$, and the time horizon is $0 < t < T$.
+
+
+# Characterize the dynamic market equilibrium
+
+The flow of benefits ($U(y(t))$) is given by the area under the inverse demand curve:
+
+$$
+\begin{split}
+U(y(t)) &= \int_0^{y(t)}p(s)\,ds \\
+&= \int_0^{y(t)}(a + bs)\,ds \\
+&= as + \frac{1}{2}bs^2 \bigg|_0^{y(t)} \\
+&= ay(t) + \frac{1}{2}by(t)^2 - \left((a\times 0) + \left(\frac{1}{2}b\times 0^2\right)\right) \\
+&= ay(t) + \frac{1}{2}by(t)^2
+\end{split}
+$$
+
+We know the initial conditions, and that there is no growth in the resource, so the optimization problem then becomes:
+
+$$
+\begin{split}
+\max_{y(t)} \int_{t = 0}^T\left[ay(t) + \frac{1}{2}by(t)^2\right]e^{-rt}\, dt\\
+\\
+\rm{s.t.}\ \dot{x}(t) = -y(t);\; x(0) = x_0
+\end{split}
+$$
+
+The current-value Hamiltonian is given by:
+
+$$
+\begin{split}
+\tilde{H}&= U(y(t)) - \mu(t)y(t) \\
+&= ay(t) + \frac{1}{2}by(t)^2 - \mu(t)y(t)
+\end{split}
+$$
+
+The maximum principle gives:
+
+$$
+\begin{split}
+\tilde{H_y} = U'(y(t))-\mu(t) &= 0 \\
+a+ by(t) - \mu(t) &= 0 \\
+p(y(t)) - \mu(t) &= 0
+\end{split}
+$$
+
+With a free-time problem, $H(T) = 0$ and the free-state condition is $\mu(T)x(T) = 0$. As in the lecture notes, the adjoint equation is $-\tilde{H}_x = \dot{\mu}(t) - r\mu(t) = 0$. We then apply Leibniz rule to the maximum condition above and obtain:
+
+$$
+\begin{split}
+\tilde{H}_y &= 0 \\
+p(y(t)) - \mu(t) &= 0 \\
+p(t) - \mu(t) &= 0 \\
+p(t) &= \mu(t)
+\end{split}
+$$
+
+And since the adjoint equation was $\frac{\dot{\mu}(t)}{\mu(t)} = r$, then $\frac{\dot{p}(t)}{p(t)} = r$ and so Hotelling's rule can be satisfied and prices grow at the discount rate: $p(t) = p(0)e^{rt}$.
+
+Our free-time condition stated above implies that no resources should be left in time $t = T$, and so the sum (integral) of all extractions should equal the initial stock size: $x_0 = \int_0^Ty(t)\,dt$.
+
+# Implicit $T$ function and its marginal changes\footnote{I did not do the marginal changes because I was unsure how to, and it only became clear after I saw it in class today. It is now evident, but I will refrain from including these as part of my assignment because I would not have been able to turn them in. However, it is now clear clear how increases in $b$, $X_0$, interest rate, and choke price cause a increases-decrease in $T$.}
+
+We know that at time $t = T$ there are no resources left (free-state condition), so $y(T) = 0$. We are also told that $p(t) = a - by(t)$, where I can solve for y and obtain my downward sloping demand curve:
+
+$$
+y(t) = \frac{a-p(t)}{b}
+$$
+
+Also, since $a$ is my choke price I can have:
+
+$$
+p(T) = p(0)e^{rt} = a
+$$
+
+I can take the condition from above stating that initial stock size must be equal to the area under all extractions $y(t)$ and substitute my downard sloping demand curve into it:
+
+$$
+\begin{split}
+x_0 &= \int_0^Ty(t)\,dt \\
+x_0 &= \int_0^T \frac{a-p(t)}{b}\, dt \\
+x_0 &= \frac{1}{b}\left( aT -\frac{p_0}{r}(e^{rt}-1) \right) \\
+x_0b &= aT -\frac{p_0}{r}(e^{rt}-1) \\
+x_0b -aT + \frac{a}{r} &= \frac{a}{r}e^{-rT}
+\end{split}
+$$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
