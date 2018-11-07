@@ -1,0 +1,61 @@
+---
+title: "Homework Challenge #2"
+subtitle: "ECON 260A"
+author: "Villaseñor-Derbez, J.C."
+date: "`r Sys.Date()`"
+output:
+    bookdown::pdf_document2:
+        toc: no
+        number_sections: false
+header-includes:
+  - \usepackage{float}
+  - \floatplacement{figure}{H}
+  # - \usepackage{natbib}
+# bibliography: references.bib
+---
+
+```{r, echo = F}
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      eval = T)
+
+suppressPackageStartupMessages({
+  library(startR)
+  library(tidyverse)
+})
+```
+
+# Set up
+
+Let $x_{it}$ be the stock of an invasive species in patch $i$ at the beginning of time period $t$, and $h_{it}$ is the control in patch $i$ during time period $t$. The timing is as follows: The stock is observed in each patch, some level of control is undertaken in each patch, the remaining stock grows, and then moves across space. Movement from patch $i$ to patch $j$ is given by the constant $D_{ij}$. So the equation of motion is:
+
+$$
+x_{it+1} = \sum_{j = 1}^N{D_{ji}g(e_{jt})}
+$$
+
+where $e_{jt}$ is the residual stock in patch $j$ and $N$ is the number of patches. If the stock at the beginning of the period in patch $i$ is $x_i$ and the control is $h_i$ (leaving residual stock $e_i$), then the total control cost during that period in patch $i$ is  $\int_{e_i}^{x_i}{x_i e_i \theta_ic(s)\;ds}$, where the downward-sloping function $\theta_ic(s)$ is the marginal control cost when the stock is $s$ (the parameter $\theta_i$ is a constant). After control takes place, but before growth and spread occur, the residual stock imposes a patch-specific marginal damage of $k_i$, so the total damage in patch $i$ during period $t$ is given by $k_ie_i$.
+
+# Suppose each patch is owned by a separate landowner, and that all landowners were myopic. Describe the dynamics and the steady state of this system.
+
+# For the remainder of this assignment, assume that a central planner can determine the level of control in each patch in each time period
+
+## Period $t$ dynamic programming equation
+
+## Fixed-time, no salvage value
+
+## Backward induction
+
+## Dependence of control in $i$ on $x, k, \phi D and D$
+
+
+
+
+
+
+
+
+
+
+
+

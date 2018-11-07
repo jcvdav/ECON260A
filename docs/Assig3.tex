@@ -1,0 +1,142 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Homework Challenge \#2},
+            pdfauthor={Villaseñor-Derbez, J.C.},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Homework Challenge \#2}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \subtitle{ECON 260A}
+  \author{Villaseñor-Derbez, J.C.}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{2018-11-07}
+
+\usepackage{float}
+\floatplacement{figure}{H}
+
+\begin{document}
+\maketitle
+
+\section{Set up}\label{set-up}
+
+Let \(x_{it}\) be the stock of an invasive species in patch \(i\) at the
+beginning of time period \(t\), and \(h_{it}\) is the control in patch
+\(i\) during time period \(t\). The timing is as follows: The stock is
+observed in each patch, some level of control is undertaken in each
+patch, the remaining stock grows, and then moves across space. Movement
+from patch \(i\) to patch \(j\) is given by the constant \(D_{ij}\). So
+the equation of motion is:
+
+\[
+x_{it+1} = \sum_{j = 1}^N{D_{ji}g(e_{jt})}
+\]
+
+where \(e_{jt}\) is the residual stock in patch \(j\) and \(N\) is the
+number of patches. If the stock at the beginning of the period in patch
+\(i\) is \(x_i\) and the control is \(h_i\) (leaving residual stock
+\(e_i\)), then the total control cost during that period in patch \(i\)
+is \(\int_{e_i}^{x_i}{x_i e_i \theta_ic(s)\;ds}\), where the
+downward-sloping function \(\theta_ic(s)\) is the marginal control cost
+when the stock is \(s\) (the parameter \(\theta_i\) is a constant).
+After control takes place, but before growth and spread occur, the
+residual stock imposes a patch-specific marginal damage of \(k_i\), so
+the total damage in patch \(i\) during period \(t\) is given by
+\(k_ie_i\).
+
+\section{Suppose each patch is owned by a separate landowner, and that
+all landowners were myopic. Describe the dynamics and the steady state
+of this
+system.}\label{suppose-each-patch-is-owned-by-a-separate-landowner-and-that-all-landowners-were-myopic.-describe-the-dynamics-and-the-steady-state-of-this-system.}
+
+\section{For the remainder of this assignment, assume that a central
+planner can determine the level of control in each patch in each time
+period}\label{for-the-remainder-of-this-assignment-assume-that-a-central-planner-can-determine-the-level-of-control-in-each-patch-in-each-time-period}
+
+\subsection{\texorpdfstring{Period \(t\) dynamic programming
+equation}{Period t dynamic programming equation}}\label{period-t-dynamic-programming-equation}
+
+\subsection{Fixed-time, no salvage
+value}\label{fixed-time-no-salvage-value}
+
+\subsection{Backward induction}\label{backward-induction}
+
+\subsection{\texorpdfstring{Dependence of control in \(i\) on
+\(x, k, \phi D and D\)}{Dependence of control in i on x, k, \textbackslash{}phi D and D}}\label{dependence-of-control-in-i-on-x-k-phi-d-and-d}
+
+
+\end{document}
