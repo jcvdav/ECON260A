@@ -1,5 +1,5 @@
 ---
-title: "Homework Challenge #2"
+title: "Homework Challenge #3"
 subtitle: "ECON 260A"
 author: "Villaseñor-Derbez, J.C."
 date: "`r Sys.Date()`"
@@ -34,13 +34,75 @@ $$
 x_{it+1} = \sum_{j = 1}^N{D_{ji}g(e_{jt})}
 $$
 
-where $e_{jt}$ is the residual stock in patch $j$ and $N$ is the number of patches. If the stock at the beginning of the period in patch $i$ is $x_i$ and the control is $h_i$ (leaving residual stock $e_i$), then the total control cost during that period in patch $i$ is  $\int_{e_i}^{x_i}{x_i e_i \theta_ic(s)\;ds}$, where the downward-sloping function $\theta_ic(s)$ is the marginal control cost when the stock is $s$ (the parameter $\theta_i$ is a constant). After control takes place, but before growth and spread occur, the residual stock imposes a patch-specific marginal damage of $k_i$, so the total damage in patch $i$ during period $t$ is given by $k_ie_i$.
+where $e_{jt}$ is the residual stock in patch $j$ and $N$ is the number of patches. If the stock at the beginning of the period in patch $i$ is $x_i$ and the control is $h_i$ (leaving residual stock $e_i$), then the total control cost during that period in patch $i$ is  $\int_{e_i}^{x_i}{\theta_ic(s)\;ds}$, where the downward-sloping function $\theta_ic(s)$ is the marginal control cost when the stock is $s$ (the parameter $\theta_i$ is a constant). After control takes place, but before growth and spread occur, the residual stock imposes a patch-specific marginal damage of $k_i$, so the total damage in patch $i$ during period $t$ is given by $k_ie_i$.
 
-# Suppose each patch is owned by a separate landowner, and that all landowners were myopic. Describe the dynamics and the steady state of this system.
+# Dynamics and the steady state of this system with myopic landowner
 
-# For the remainder of this assignment, assume that a central planner can determine the level of control in each patch in each time period
+From the problem set up, we know that "*After control takes place, but before growth and spread occur, the residual stock imposes a patch-specific marginal damage of $k_i$, so the total damage in patch $i$ during period $t$ is given by $k_ie_i$*". Myopic landowners would not care about the future growth, dispersal, and damages of an invasive species. Instead, they would only care about damages and control costs in this time step
+
+Total costs for owner of propert $i$ at time $t$ are given by:
+
+$$
+\int_{e_{it}}^{x_{it}}{\theta c(s)\;ds} + ke_{it}
+$$
+
+Our current "damage function" assumes a constant marginal impact from remaining stock size. Therefore, our total costs can be shown by the graphical representation of the problem:
+
+```{r, fig.height = 4, fig.width = 4, fig.cap = "Illustration of marginal costs of control and damage. The area under each curve show the total cost of control (blue) and damage (red)."}
+
+k <- 25
+c <- -0.08
+
+tibble(s = 0:100) %>% 
+  mutate(k = k,
+         c = 60 * exp(c*s) + 5,
+         k_under = ifelse(s <= 38, k, NA),
+         c_under = ifelse(between(s, 38, 80), c, NA),
+         label_k = ifelse(s == 50, "dmg = k", NA),
+         label_c = ifelse(s == 80, "cost = theta c(s)", NA)) %>% 
+  ggplot(aes(x = s)) +
+  geom_ribbon(aes(ymin = 0, ymax = k_under), fill = "red", color = "red", alpha = 0.5) +
+  geom_ribbon(aes(ymin = 0, ymax = c_under), fill = "blue", color = "blue", alpha = 0.5) +
+  geom_line(aes(y = k), size = 1) +
+  geom_line(aes(y = c), size = 1) +
+  geom_text(aes(y = k + 5, label = label_k)) +
+  geom_text(aes(y = c + 5, label = label_c)) +
+  scale_x_continuous(label = NULL) +
+  scale_y_continuous(label = NULL) +
+  # coord_fixed() +
+  xlab("Stock (s)") + 
+  ylab("MC") +
+  ggtheme_plot()
+```
+
+
+Each individual landowner would then control up to a point where control costs are equal to damage costs. With this in mind, and knowing that $e_{it} = x_{it} - h_{it}$, the above becomes:
+
+$$
+\begin{split}
+\int_{e_{it}}^{x_{it}}{\theta c(s)\;ds} &= ke_{it} \\
+\int_{e}^{x}{\theta c(s)\;ds} &= k(x-h) \\
+\int_{e}^{x}{\theta c(s)\;ds} &= kx - kh \\
+kh &= kx - \int_{e}^{x}{\theta c(s)\;ds} \\
+h &= x - \frac{\int_{e}^{x}{\theta c(s)\;ds}}{k}
+\end{split}
+$$
+
+Evidently, this approach does not account for the growth and dispersal of the remaining stock, as well as the future damages of the immigrating stock left from other landowner's suboptimal management.
+
+# Central planner determines control $\forall\;t \textrm{ and } i$
+
+The central planner, on the other hand, would account for present reductions in damages as well as future ones. Therefore, the  planner must balance between present costs of managing and future costs of damage.
 
 ## Period $t$ dynamic programming equation
+
+$$
+\begin{split}
+&\min_{h_t} \sum_{t = 0}^\infty{\left[\sum_{i = 1}^N{\left(\int_{e_i}^{x_i}{\theta_ic(s)\;ds} +k_ie_i\right)}+ V_{t+1}(x_{it+1})\right]}\\
+\\
+&\rm{s.t.}\ x_{it+1} = \sum_{j = 1}^N{D_{ji}g(e_{jt})}
+\end{split}
+$$
 
 ## Fixed-time, no salvage value
 
