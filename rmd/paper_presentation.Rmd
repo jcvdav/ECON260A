@@ -10,6 +10,7 @@ output:
 
 ```{r, echo = F}
 suppressPackageStartupMessages({
+  library(cowplot)
   library(tidyverse)
 })
 ```
@@ -173,6 +174,106 @@ Managers set: $\hat{\Phi}(S)$
 $$
 \underbrace{H_\varphi(\hat{\Phi}(S); S | \varepsilon)}_\text{Harvest response with fee} = \underbrace{Q^*(S; \varepsilon)}_\text{Myopically omniscient TAC}
 $$
+
+Intuition:
+
+A landings fee will always result in the optimum escapement policy
+
+# Optimal escapement
+
+```{r, echo = F, fig.width = 6, fig.height = 5}
+alpha <- 1.4
+beta <- 5000
+sigma <- 0.6
+h <- 20
+
+set.seed(43)
+rnd <- rnorm(100, 0, 1)
+
+x0 <- 5000
+
+# Low Q
+x <- vector()
+x_rnd <- vector()
+catches <- vector()
+S <- vector()
+R <- vector()
+x[1] <- x0
+q <- 500
+
+for(i in 1:100){
+  R[i] <- x[i] * exp(alpha * (1-(x[i]/beta)))
+  x_rnd[i] <- R[i] * exp(sigma * rnd[i] - sigma^2/2)
+  catches[i] <- min(q, x_rnd[i])
+  x[i+1] <- x_rnd[i] - catches[i]
+}
+
+lq <- tibble(time = 1:100,
+       x = x[1:100],
+       catches = catches) %>% 
+  gather(variable, value, -time) %>% 
+  ggplot(aes(x = time, y = value, fill = variable)) +
+  geom_col() +
+  scale_fill_brewer(palette = "Set1") +
+  theme(legend.position = "None")
+
+# High Q
+x <- vector()
+x_rnd <- vector()
+catches <- vector()
+S <- vector()
+R <- vector()
+x[1] <- x0
+q <- 800
+
+for(i in 1:100){
+  R[i] <- x[i] * exp(alpha * (1-(x[i]/beta)))
+  x_rnd[i] <- R[i] * exp(sigma * rnd[i] - sigma^2/2)
+  catches[i] <- min(q, x_rnd[i])
+  x[i+1] <- x_rnd[i] - catches[i]
+}
+
+hq <- tibble(time = 1:100,
+       x = x[1:100],
+       catches = catches) %>% 
+  gather(variable, value, -time) %>% 
+  ggplot(aes(x = time, y = value, fill = variable)) +
+  geom_col() +
+  scale_fill_brewer(palette = "Set1") +
+  theme(legend.position = "None")
+
+
+# Constant S
+
+x <- vector()
+x_rnd <- vector()
+catches <- vector()
+S <- vector()
+R <- vector()
+x[1] <- x0
+escapement <- 3000
+
+for(i in 1:100){
+  R[i] <- x[i] * exp(alpha * (1-(x[i]/beta)))
+  x_rnd[i] <- R[i] * exp(sigma * rnd[i] - sigma^2/2)
+  S <- min(x_rnd[i], escapement)
+  catches[i] <- x_rnd[i] - S
+  x[i+1] <- x_rnd[i] - catches[i]
+}
+
+s <- tibble(time = 1:100,
+       x = x[1:100],
+       catches = catches) %>% 
+  gather(variable, value, -time) %>% 
+  ggplot(aes(x = time, y = value, fill = variable)) +
+  geom_col() +
+  scale_fill_brewer(palette = "Set1") +
+  theme(legend.position = "None")
+
+cowplot::plot_grid(lq, hq, s, ncol = 1)
+
+```
+
 
 # Thoughts
 

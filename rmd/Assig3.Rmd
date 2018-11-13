@@ -43,7 +43,7 @@ From the problem set up, we know that "*After control takes place, but before gr
 Total costs for owner of property $i$ at time $t$ are given by:
 
 $$
-\phi(x_{it}, e_{it}) = \int_{e_{it}}^{x_{it}}{\theta c(s)\;ds} + ke_{it}
+\phi(x_{it}, e_{it}) = \int_{e_{it}}^{x_{it}}{\theta c(s)\;ds} + k_ie_{it}
 $$
 
 Our current "damage function" assumes a constant marginal impact from remaining stock size. Therefore, our total costs can be shown by the graphical representation of the problem in Figure \ref{fig:graph}.
@@ -110,6 +110,7 @@ The social planer would seek to minimize the sum of present value of total costs
 $$
 V_t(\bar{x}_t) = \min_{e_{it}} \sum_{i = 1} ^ N\phi(x_{it}, e_{it}) + \delta V_{t+1}(\bar{x}_{it+1})
 $$
+Where $\phi(x_{it}, e_{it}) = \int_{e_{it}}^{x_{it}}{\theta c(s)\;ds} + ke_{it}$
 
 Subject to the equation of motion given by:
 
@@ -121,15 +122,41 @@ My state variable is $x_{it}$, and my control is $e_{i,t}$. In this formulation,
 
 ## Fixed-time, no salvage value
 
-With a fixed-time problem and assuming no salvage value, the problem relies only in the present costs (from control and damages) but does not account for the dispersal, growth, and future damages because  $\delta V_{t+1}(\bar{x}_{it+1}) = 0$. Therefore, the DPE becomes:
+With a fixed-time problem and assuming no salvage value, the problem relies only in the present costs (from control and damages) but does not account for the dispersal, growth, and future damages because $V_{T+1}(\bar{x}_{T+1}) = 0$. Therefore, the DPE becomes:
 
 $$
-V_t(\bar{x}_t) = \min_{e_{it}} \sum_{i = 1} ^ N\phi(x_{it}, e_{it}) + 0
+\begin{split}
+V_T(\bar{x}_T) &= \min_{e_{iT}} \left[\sum_{i = 1} ^ N\phi(x_{iT}, e_{iT}) + \delta V_{T+1}(\bar{x}_{T+1})\right] \\
+&= \min_{e_{iT}} \left[\sum_{i = 1} ^ N\phi(x_{iT}, e_{iT}) + 0 \right]\\
+&= \min_{e_{iT}} \left[\sum_{i = 1} ^ N\phi(x_{iT}, e_{iT})\right]\\
+&= \min_{e_{iT}} \left[\sum_{i = 1} ^ N\int_{e_{iT}}^{x_{iT}}{\theta c(s)\;ds} + k_ie_{iT}\right]\\
+\end{split}
 $$
 
-- $\delta V_{t+1}(\bar{x}_{it+1}) = 0$ because the world ends after $T$, and there is no value of entering period $T+1$ with $\bar{x}_{it+1}$.
+Taking first order conditions we obtain:
 
-- The policy function would be as identified in the first exercise ($c(e^*) = \frac{k_i}{\theta_i}$), where we would solve for $e^*$.
+$$
+\begin{split}
+k_i - \theta_ic(e_{iT}) &= 0 \\
+k_i &= \theta_ic(e_{iT}) \\
+\text{Assume } c(\dot{}) \text{is invertible} \\
+e^*_{iT} &= c^{-1}\left(\frac{k_i}{\theta_i}\right)
+\end{split}
+$$
+We can substitute that into our value function and obtain:
+
+$$
+V_T(\bar{x}_T) = \sum_{i = 1} ^ N\int_{e_{iT}}^{x_{iT}}{\theta c(s)\;ds} + k_ie^*_{it}
+$$
+ 
+The oplicy function implies that the optimal harvest is:
+
+$$
+\begin{split}
+h^*_{iT}(x_{iT}) &= x_{iT} - e^*_{iT} \\
+h^*_{iT}(x_{iT}) &= x_{iT} - c^{-1}\left(\frac{k_i}{\theta_i}\right)
+\end{split}
+$$
  
 ## Backward induction
 
@@ -138,10 +165,74 @@ The period-$T$ solution is shown above, so we start at period $T-1$
 The DPE is given by:
 
 $$
-V_t(\bar{x}_t) = \min_{e_{it}} \sum_{i = 1} ^ N\phi(x_{it}, e_{it}) + \delta V_{t+1}(\bar{x}_{it+1})
+V_{T-1}(\bar{x}_{T-1}) = \min_{e_{iT-1}}\left[ \sum_{i = 1} ^ N\left(\int_{e_{iT-1}}^{x_{iT-1}}{\theta c(s)\;ds} + k_ie_{iT-1}\right) + \delta V_{T}(\bar{x}_{T})\right]
 $$
 
-## Dependence of control in $i$ on $x, k, \phi D and D$
+Substitute the $V_T(\dot{})$ value function:
+
+$$
+V_{T-1}(\bar{x}_{T-1}) = \min_{e_{iT-1}} \left[\sum_{i = 1} ^ N\left(\int_{e_{iT-1}}^{x_{iT-1}}{\theta c(s)\;ds} + k_ie_{iT-1}\right) + \delta \sum_{i = 1} ^ N\left[\left(F(x_{iT}) - F\left(c^{-1}\left(\frac{k_i}{\theta_i}\right)\right)\right) + c^{-1}\left(\frac{k_i}{\theta_i}\right)\right] \right] \\
+$$
+
+Taking first order conditions we obtain:
+
+$$
+\begin{split}
+0 &= k_i - \theta_ic(e_{iT-1}) + \delta \left[\sum_{j = 1} ^ N \theta_jc(x_{jT})g'(e_{iT-1})D_{ij}\right] \\
+\text{solve for }k_i \\
+k_i &= \theta_ic(e_{iT-1}) - \delta \left[\sum_{j = 1} ^ N \theta_jc(x_{jT})g'(e_{iT-1})D_{ij}\right]
+\end{split}
+$$
+
+This formulation shows the discounted future values of the remaining stock that has moved according to the dispersal given by matrix $D_{ij}$ must equal the margtinal damages for the optimum $e^*_i$ ($g'()$ represents).
+
+We can then substitute the value function derived for $T$ into the value function of $T-1$ and obtain:
+
+$$
+\begin{split}
+V_{T-1}(\bar{x}_{T-1}) &=  \sum_{i = 1} ^ N\left(\int_{e_{i}^*}^{x_{iT-1}}{\theta c(s)\;ds} + k_ie_{i}^*\right) + \delta V_{T}(\bar{x}_{T}) \\
+&=  \sum_{i = 1} ^ N\left(\int_{e_{i}^*}^{x_{iT-1}}{\theta c(s)\;ds} + k_ie_{i}^*\right) + \delta \sum_{i = 1} ^ N\left(\int_{e_{iT}}^{x_{iT}}{\theta c(s)\;ds} + k_ie^*_{iT}\right) \\
+&=  \sum_{i = 1} ^ N\left(\int_{e_{i}^*}^{x_{iT-1}}{\theta c(s)\;ds} + k_ie_{i}^*\right) + \delta \sum_{i = 1} ^ N\left(\int_{e_{iT}}^{\sum_jD_{ij}g(e^*_j)}{\theta c(s)\;ds} + k_ie^*_{iT}\right)
+\end{split}
+$$
+The last term on the RHS can be set to $\Omega_{T-1}$ which is a constant that depends on T. Therefore, our value function can be:
+
+$$
+V_{T-1}(\bar{x}_{T-1}) =  \sum_{i = 1} ^ N\left(\int_{e_{i}^*}^{x_{iT-1}}{\theta c(s)\;ds} + k_ie_{i}^*\right) + \Omega_{T-1}
+$$
+
+And where $e_i^*$ would be defined as the value that makes the following true:
+
+$$
+k_i = \theta_ic(e_{iT-1}) - \delta \left[\sum_{j = 1} ^ N \theta_jc\left(\sum_{i = 1}^ND_{ij}g(e^*_j)\right)g'(e_{iT-1}^*)D_{ij}\right]
+$$
+
+Moving to period $T-2$ we have that:
+
+$$
+V_{T-2}(\bar{x}_{T-1}) = \min_{e_{iT-2}}\left[ \sum_{i = 1} ^ N\left(\int_{e_{iT-2}}^{x_{iT-2}}{\theta c(s)\;ds} + k_ie_{iT-2}\right) + \delta V_{T-1}(\bar{x}_{T-1})\right]
+$$
+
+Taking first order conditions we would get the same as before but for $T-2$:
+
+$$
+0 = k_i - \theta_ic(e_{iT-2}) + \delta \left[\sum_{j = 1} ^ N \theta_jc(x_{jT-1})g'(e_{iT-2})D_{ij}\right]
+$$
+
+This would imply that, up to a constant $\Omega_t$, the function has converged and we obtain that:
+
+$$
+V_t^*(\bar{x}_{t}) = \sum_{i = 1} ^ N\left(\int_{e_{i}^*}^{x_{it}}{\theta c(s)\;ds} + k_ie_{i}^*\right) + \Omega_{t}
+$$
+
+With 
+
+$$
+k_i = \theta_ic(e_{i}^*) - \delta \left[\sum_{j = 1} ^ N \theta_jc\left(\sum_{i=1}^ND_{ij}g(e^*_j)\right)g'(e_{iT-1}^*)D_{ij}\right]
+$$
+And $h^*_{it}$ is just what ever brings $x_{it}$ down to $e*_i$
+
+## Dependence of control in $i$ on $xi$, $ki$, $\phi_i$ $D_{ij}$ and $D_{ji}$
 
 
 
