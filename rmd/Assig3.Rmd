@@ -38,17 +38,17 @@ where $e_{jt}$ is the residual stock in patch $j$ and $N$ is the number of patch
 
 # Dynamics and the steady state of this system with myopic landowner
 
-From the problem set up, we know that "*After control takes place, but before growth and spread occur, the residual stock imposes a patch-specific marginal damage of $k_i$, so the total damage in patch $i$ during period $t$ is given by $k_ie_i$*". Myopic landowners would not care about the future growth, dispersal, and damages of an invasive species. Instead, they would only care about damages and control costs in this time step
+From the problem set up, we know that "*After control takes place, but before growth and spread occur, the residual stock imposes a patch-specific marginal damage of $k_i$, so the total damage in patch $i$ during period $t$ is given by $k_ie_i$*". Myopic landowners would not care about the future growth, dispersal, and damages of an invasive species. Instead, they would only care about damages and control costs in this time step.
 
-Total costs for owner of propert $i$ at time $t$ are given by:
+Total costs for owner of property $i$ at time $t$ are given by:
 
 $$
-\int_{e_{it}}^{x_{it}}{\theta c(s)\;ds} + ke_{it}
+\phi(x_{it}, e_{it}) = \int_{e_{it}}^{x_{it}}{\theta c(s)\;ds} + ke_{it}
 $$
 
-Our current "damage function" assumes a constant marginal impact from remaining stock size. Therefore, our total costs can be shown by the graphical representation of the problem:
+Our current "damage function" assumes a constant marginal impact from remaining stock size. Therefore, our total costs can be shown by the graphical representation of the problem in Figure \ref{fig:graph}.
 
-```{r, fig.height = 4, fig.width = 4, fig.cap = "Illustration of marginal costs of control and damage. The area under each curve show the total cost of control (blue) and damage (red)."}
+```{r, fig.height = 4, fig.width = 4, fig.cap = "\\label{fig:graph}Illustration of marginal costs of control and damage. The area under each curve show the total cost of control (blue) and damage (red)."}
 
 k <- 25
 c <- -0.08
@@ -56,39 +56,48 @@ c <- -0.08
 tibble(s = 0:100) %>% 
   mutate(k = k,
          c = 60 * exp(c*s) + 5,
-         k_under = ifelse(s <= 38, k, NA),
-         c_under = ifelse(between(s, 38, 80), c, NA),
+         k_under = ifelse(s <= 14, k, NA),
+         c_under = ifelse(between(s, 14, 80), c, NA),
          label_k = ifelse(s == 50, "dmg = k", NA),
-         label_c = ifelse(s == 80, "cost = theta c(s)", NA)) %>% 
+         label_c = ifelse(s == 50, "cost = theta c(s)", NA)) %>% 
   ggplot(aes(x = s)) +
   geom_ribbon(aes(ymin = 0, ymax = k_under), fill = "red", color = "red", alpha = 0.5) +
   geom_ribbon(aes(ymin = 0, ymax = c_under), fill = "blue", color = "blue", alpha = 0.5) +
   geom_line(aes(y = k), size = 1) +
   geom_line(aes(y = c), size = 1) +
-  geom_text(aes(y = k + 5, label = label_k)) +
+  geom_text(aes(y = k + 2.5, label = label_k)) +
   geom_text(aes(y = c + 5, label = label_c)) +
+  geom_vline(xintercept = 14, linetype = "dashed") +
+  geom_vline(xintercept = 80, linetype = "dashed") +
   scale_x_continuous(label = NULL) +
   scale_y_continuous(label = NULL) +
-  # coord_fixed() +
   xlab("Stock (s)") + 
   ylab("MC") +
   ggtheme_plot()
 ```
 
 
-Each individual landowner would then control up to a point where control costs are equal to damage costs. With this in mind, and knowing that $e_{it} = x_{it} - h_{it}$, the above becomes:
+
+The myopic landowner would minimize present costs of control and damage, without accounting for the growth and dispersal of the stock and the future damaged that would come with it. Therefore, the myopic landowner seeks to minimize total costs (shaded area in Fig. \ref{fig:graph}) by chosing an optimal $h$:
 
 $$
 \begin{split}
-\int_{e_{it}}^{x_{it}}{\theta c(s)\;ds} &= ke_{it} \\
-\int_{e}^{x}{\theta c(s)\;ds} &= k(x-h) \\
-\int_{e}^{x}{\theta c(s)\;ds} &= kx - kh \\
-kh &= kx - \int_{e}^{x}{\theta c(s)\;ds} \\
-h &= x - \frac{\int_{e}^{x}{\theta c(s)\;ds}}{k}
+&\min_{e}\phi(x_i, e_i) \\
+&\min_{e} \left[\int_{e_i}^{x_i}{\theta_ic(s)\;ds} +k_ie_i\right]  \\
+&\min_{e} \left[\int_{e_i}^{x_i}{\theta_ic(s)\;ds} +k_i(x_{i} - h_{i})\right] \\
 \end{split}
 $$
 
-Evidently, this approach does not account for the growth and dispersal of the remaining stock, as well as the future damages of the immigrating stock left from other landowner's suboptimal management.
+Here we would take first-order conditions and find the optimal $h$. But by visually inspecting Figure \ref{fig:graph}, we know that each individual landowner would control up to a point where marginal control costs are equal to marginal damage costs. With this in mind, and knowing that $e_{it} = x_{it} - h_{it}$, we drop the $t$ subindeces to turn this into a simple problem, and denote $e^*$ as the one-period equilibrium stock size left after harvesting and for which marginal costs of control are equal to the marginal costs of damages:
+
+$$
+\begin{split}
+\theta_ic(e^*) = k_i \\
+c(e^*) = \frac{k_i}{\theta_i}
+\end{split}
+$$
+
+If we had a functional form for $c(s)$ we would substitute $e^*$ into it and then just solve for $e^*$ in the above. Intuitevely $h^* = x - e^*$: that is, the optimal $h^*$ would be whatever brings the stock from $x$ down to $e^*$. Evidently, this approach does not account for the growth and dispersal of the remaining stock, as well as the future damages of the immigrating stock left from other landowner's suboptimal management.
 
 # Central planner determines control $\forall\;t \textrm{ and } i$
 
@@ -96,17 +105,41 @@ The central planner, on the other hand, would account for present reductions in 
 
 ## Period $t$ dynamic programming equation
 
+The social planer would seek to minimize the sum of present value of total costs by optimally selecting the spatial and temporal control. I denote vectors as $\bar{x_t}$, so that $\bar{x_t} = x_{1t}, x_{2t},...,x_{N-1t}, x_{Nt}$. Then, the period-$t$ dynamic programming equation is given by:
+
 $$
-\begin{split}
-&\min_{h_t} \sum_{t = 0}^\infty{\left[\sum_{i = 1}^N{\left(\int_{e_i}^{x_i}{\theta_ic(s)\;ds} +k_ie_i\right)}+ V_{t+1}(x_{it+1})\right]}\\
-\\
-&\rm{s.t.}\ x_{it+1} = \sum_{j = 1}^N{D_{ji}g(e_{jt})}
-\end{split}
+V_t(\bar{x}_t) = \min_{e_{it}} \sum_{i = 1} ^ N\phi(x_{it}, e_{it}) + \delta V_{t+1}(\bar{x}_{it+1})
 $$
+
+Subject to the equation of motion given by:
+
+$$
+\rm{s.t.}\ x_{it+1} = \sum_{j = 1}^N{D_{ji}g(e_{jt})}
+$$
+
+My state variable is $x_{it}$, and my control is $e_{i,t}$. In this formulation, the planner doesn't explicitly choose how much to harvest, but rather how much to leave in every parcel $i$ at every time period $t$.
 
 ## Fixed-time, no salvage value
 
+With a fixed-time problem and assuming no salvage value, the problem relies only in the present costs (from control and damages) but does not account for the dispersal, growth, and future damages because  $\delta V_{t+1}(\bar{x}_{it+1}) = 0$. Therefore, the DPE becomes:
+
+$$
+V_t(\bar{x}_t) = \min_{e_{it}} \sum_{i = 1} ^ N\phi(x_{it}, e_{it}) + 0
+$$
+
+- $\delta V_{t+1}(\bar{x}_{it+1}) = 0$ because the world ends after $T$, and there is no value of entering period $T+1$ with $\bar{x}_{it+1}$.
+
+- The policy function would be as identified in the first exercise ($c(e^*) = \frac{k_i}{\theta_i}$), where we would solve for $e^*$.
+ 
 ## Backward induction
+
+The period-$T$ solution is shown above, so we start at period $T-1$
+
+The DPE is given by:
+
+$$
+V_t(\bar{x}_t) = \min_{e_{it}} \sum_{i = 1} ^ N\phi(x_{it}, e_{it}) + \delta V_{t+1}(\bar{x}_{it+1})
+$$
 
 ## Dependence of control in $i$ on $x, k, \phi D and D$
 
