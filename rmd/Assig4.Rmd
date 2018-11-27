@@ -13,7 +13,7 @@ header-includes:
 # bibliography: references.bib
 ---
 
-[^*]: Code for this assignment is available on [GitHub](https://github.com/jcvdav/ECON260A/rmd/Assig4.Rmd)
+[^*]: Code for this assignment is available on GitHub: [https://github.com/jcvdav/ECON260A/blob/master/rmd/Assig4.Rmd](https://github.com/jcvdav/ECON260A/blob/master/rmd/Assig4.Rmd)
 
 
 ```{r, echo = F}
@@ -32,7 +32,7 @@ suppressPackageStartupMessages({
 
 We consider a two-period investment opportunity with a fixed cost of investment of $I = 400$ and revenues of $V_1 = 200$ for the first year. The next year the investment may generate $V_2 = 600$ with probability $p$ and $V_2 = 100$ with probability $1 - p$. We assume investments are irreversible, and that $V_2$ is only observed until year 2. The discount factor is $\delta = 1$.
 
-## Derive the Dixit-Pindyck option value in termps of $p$
+## Derive the Dixit-Pindyck option value in terms of $p$
 
 The general payoff on investment would be given by:
 
@@ -40,7 +40,7 @@ $$
 v(x_1, x_2, \theta) = u_1(x_1) + u_2(x_1, x_2, \theta)
 $$
 
-This shows how $x_1$ affects the period 2 dynamics, because the investment is irriversible. This follows the same notation as the class notes where $x_1$ is the decision to invest or not invest in year 1 and $x_2$ the same for year 2. The only difference is that I define the random shock as $\theta$ instead of $\tilde{\theta}$ for brevity and because there is no need to distinguish this value.
+This shows how $x_1$ affects the period 2 dynamics, because the investment is irreversible. This follows the same notation as the class notes where $x_1$ is the decision to invest or not invest in year 1 and $x_2$ the same for year 2. The only difference is that I define the random shock as $\theta$ instead of $\tilde{\theta}$ for brevity and because there is no need to distinguish this value.
 
 The first year revenues for investing and not investing would be given by:
 
@@ -72,7 +72,7 @@ $$
 DPOV = \max\{V^l(1), V^l(0)\} - \max\{V^n(1), V^n(0)\}
 $$
 
-The superscript $l$ and $n$ denote learning and the naive decision, and $V$ denote the *expected* values given the decissions. The ability to learn does not change the value of investing relative to the naive case, because the decision is irreversible. Therefore $V^l(1) \equiv V^n(1)$ and any of these are given by $V(1)$:
+The superscript $l$ and $n$ denote learning and the naive decision, and $V$ denote the *expected* values given the decisions. The ability to learn does not change the value of investing relative to the naive case, because the decision is irreversible. Therefore $V^l(1) \equiv V^n(1)$ and any of these are given by $V(1)$:
 
 $$
 \begin{split}
@@ -83,14 +83,13 @@ V(1) &= u_1(1) + \mathrm{E}[u_2(1,1,\theta)] \\
 & = 500p - 100
 \end{split}
 $$
-
-The value with learning and not investing in the first period is given by:
+Not investing in the first period and waiting to decide is given by:
 
 $$
 \begin{split}
 V^l(0) &= u_1(0) + \mathrm{E}\left[\max_{x_2 \in\{0, 1\}}\left[u_2(1, x_2, \theta)\right]\right] \\
-&= 0 -400 + 600 \\
-&= 200
+&= 0 (-400 + 600)p + (0-0)(1-p) \\
+&= 200p
 \end{split}
 $$
 
@@ -104,15 +103,15 @@ $$
 Substituting these into the $DPOV$ equation, we obtain:
 
 $$
-DPOV = \max\{500p - 100, 200\} - \max\{500p - 100, 0\}
+DPOV = \max\{500p - 100, 200p\} - \max\{500p - 100, 0\}
 $$
 
-The $DPOV$ captures the valuye of postponing our decision to invest given that we are able to learn about $\theta$. Therefore, the $DPOV \nleq 0$, because $DPOV = 0$ implies that we don't learn, or that what we learn is not valuable enough. The DPOV is shown as a function of P in figure \@ref(fig:dpov).
+The $DPOV$ captures the value of postponing our decision to invest given that we are able to learn about $\theta$ in teh future. Therefore, the $DPOV \nleq 0$, because $DPOV = 0$ implies that we don't learn, or that what we learn is not valuable enough. The DPOV is shown as a function of P in figure \@ref(fig:dpov).
 
 ```{r dpov, fig.height = 3, fig.width = 6, fig.cap = "Dixit-Pindyck Option Value as a function of $p$. Size of the dots indicate the naive value, and colors indicate value with learning."}
 tibble(p = seq(0, 1, by = 0.01)) %>% 
   rowwise() %>% 
-  mutate(learn = max((500 * p) -100, 200),
+  mutate(learn = max((500 * p) -100, 200 * p),
          naive = max((500 * p) -100, 0),
          dpov = learn - naive) %>% 
   ggplot(aes(x = p, y = dpov, fill = learn, size = naive)) +
@@ -147,8 +146,8 @@ $$
 $$
 \begin{split}
 V^l(0) &= u_1(0) + \mathrm{E}\left[\max_{x_2 \in\{0, 1\}}\left[u_2(1, x_2, \theta)\right]\right] \\
-&= 0 -400 + 600 + 100u \\
-&= 200 + 100u
+&= 0 (-400 + 600 + 100u)p \\
+&= 200p + 100up
 \end{split}
 $$
 
@@ -157,17 +156,17 @@ $V^n(0)$ remains the same.
 Therefore, the $DPOV$ in terms of $p$ and $u$ becomes:
 
 $$
-DPOV = \max\{-100 + 500p + 200up -100, 200 + 100u\} - \max\{-100 + 500p + 200up -100, 0\}
+DPOV = \max\{-100 + 500p + 200up -100, 200p + 100up\} - \max\{-100 + 500p + 200up -100, 0\}
 $$
 
-Even when u causes an asymetric shock of, increasing values of $u$ cause an increase in $DPOV$. This is because at the second time step, we realize if we'll receive a greater or lower shock (as compared to the previous scenario). In a sense, a larger $u$ just yields a greater $DPOV$ because we know that we'll get an extra $100u$ or that we'll lose an extra $-100u$ and we can avoid these in the same way. Figures \@ref(fig:lines) and \@ref(fig:dpovu) show the relationship between $u$ and $DPOV$ and of $DPOV$ and a spacie between $p$ and $u$..
+Even when $u$ causes an asymmetric shock, increasing values of $u$ cause an increase in $DPOV$. However, the slope is also mediated by the value of p. Like the case before, low $p$ values (high probability of having the 100 payoff) increase the $DPOV$. This is because at the second time step, we realize if we'll receive a greater or lower shock (as compared to the previous scenario). In a sense, a larger $u$ just yields a greater $DPOV$ because we know that we'll get an extra $100u$ or that we can prevent losing $-100u$. Figures \@ref(fig:lines) and \@ref(fig:dpovu) show the relationship between $u$ and $DPOV$ and of $DPOV$ and a space between $p$ and $u$.
 
 ```{r lines, fig.height = 3, fig.width = 6, fig.cap = "Relationship between DPOV and $u$ for three given values of $p$. Colors indicate the value of $p$, sizes indicate the naive value, and transparency the learning value."}
 expand.grid(p = seq(0, 1, by = 0.1),
             u = seq(0, 1, by = 0.1)) %>% 
   rowwise() %>% 
   mutate(learn = max((-100 + (500 * p) + (200 * u * p) -100 * u),
-                     (200 + (100 * u))),
+                     (200 + (100 * u)) * p),
          naive = max((-100 + (500 * p) + (200 * u * p) -100 * u),
                      0),
          dpov = learn - naive) %>% 
@@ -190,7 +189,7 @@ expand.grid(p = seq(0, 1, by = 0.1),
             u = seq(0, 1, by = 0.1)) %>% 
   rowwise() %>% 
   mutate(learn = max((-100 + (500 * p) + (200 * u * p) -100 * u),
-                     (200 + (100 * u))),
+                     (200 + (100 * u)) * p),
          naive = max((-100 + (500 * p) + (200 * u * p) -100 * u),
                      0),
          dpov = learn - naive) %>% 
@@ -209,6 +208,7 @@ expand.grid(p = seq(0, 1, by = 0.1),
   geom_vline(xintercept = seq(0, 1, by = 0.1), linetype = "dashed", color = "white")
 ```
 
+
 ## Assume $\delta < 1$ and $u = 0$ again.
 
 Since the discount factor enters as a multiplicative term for the second year, we can just propagate it and obtain the following expected payoffs:
@@ -216,23 +216,25 @@ Since the discount factor enters as a multiplicative term for the second year, w
 $$
 \begin{split}
 V(1) &= -200 + \delta(500p + 100) \\
-V^l(0) &= \delta200 \\
+V^l(0) &= \delta200p \\
 v^n(0) &= 0
 \end{split}
 $$
 
 $$
-DPOV = \max\{-200 + \delta (500p + 100), \delta 200\} - \max\{-200 + \delta (500p + 100), 0\}
+DPOV = \max\{-200 + \delta (500p + 100), \delta 200p\} - \max\{-200 + \delta (500p + 100), 0\}
 $$
 
-The relationship between $\delta$ and $DPOV$ is somewhat similar as the previous case. Here, we see that higher values of $\delta$ produce greater $DPOV$ for the region where $\delta > 0.5$. Very low values of $\delta$ imply that both the good and bad shocks next timestep are worth nothing, and therefore there is no value in learning.
+The relationship between $\delta$ and $DPOV$ is somewhat similar as the previous case. Here we see that the highes $DPOV$ apear as a tradeoff beween lower discount rates and higher certainty in getting the $V_2 = 600$ case. The naive and learning values (size and transparency of circles in Fig. \@ref(fig:dpovd)) show what we would expect, that the values are maximum under no uncertainty and no discounting (*i.e.* $\delta = p = 1$).
+
+Here, we see that higher values of $\delta$ produce greater $DPOV$ for the region where $\delta > 0.5$. Very low values of $\delta$ imply that both the good and bad shocks next time-step are worth nothing, and therefore there is no value in learning.
 
 ```{r dpovd, fig.height = 3, fig.width = 6, fig.cap = "DPOV under different combinations of $u$ and $p$. Colors indicate DPOV value, dots indicate a subsample (at 0.1 intervals in both axis) that show the values as naive and learning with sizes and transparency, respectively."}
 expand.grid(p = seq(0, 1, by = 0.1),
             d = seq(0, 1, by = 0.1)) %>% 
   rowwise() %>% 
   mutate(learn = max((-200 + (d * ((500 * p) + 100))),
-                     (200 * d)),
+                     (200 * d * p)),
          naive = max((-200 + (d * ((500 * p) + 100))),
                      0),
          dpov = learn - naive) %>% 
