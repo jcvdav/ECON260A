@@ -1,0 +1,256 @@
+---
+title: "Management of invasive species through property rights"
+subtitle: "ECON 260A - Final Paper"
+author: "Villaseñor-Derbez J.C."
+output:
+    bookdown::pdf_document2:
+      toc: no
+      citation_package: natbib
+      number_sections: no
+bibliography: references.bib
+biblio-style: apalike
+---
+
+```{r, echo = F}
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      eval = T)
+
+suppressPackageStartupMessages({
+  library(startR)
+  library(tidyverse)
+})
+```
+
+# Introduction
+
+Invasive species threaten native biodiversity and can have large economic impacts \citep{bax_2003}. In 2005 the economic cost of invasive species to the United States was estimated at USD \$120 billion per year \citep{pimentel_2005}. Globally, at least 84% of marine eco-regions have reported the presence of an invasive species \citep{molnar_2008}. While these numbers may vary across ecosystems and countries, they highlight the costs and impacts of managing invasive species. Here I explore the possibility of internalizing the control and damage costs via property rights to incentivize private control of invasive species.
+
+The economic literature on invasive species management can be roughly split into prevention, control, and more recently detection. The prevention literature argues that regulations put in place to lower the risk of invasions are more efficient. The control literature sates that monitoring invasive populations and implementing culling programs are a better strategy. Lastly, the detection literature suggests that, depending on the species' detectability, it may be optimal to allocate resources for early detection, where culling has the largest marginal effect on the small invasive population \citep{mehta_2007}[^2]. The reality is that there is no single best strategy to manage invasive species (or their risk of invading), and that proper interventions depend on existing institutions and ecological characteristics of the species and system \citet{lovell_2006}. Integrating the environmental, social, and economic aspects of an invasion might help identify alternative feasible management strategies \citep{larson_2011}.
+
+[^2]: Regulations that prevent invasions can impose a toll in trade and transport, often making them undesirable. Control approaches are often deemed as last resource reactive strategies. Detection efforts reduce the burden of limiting trade and / or transportation, strategies often cited in the prevention literature \citep{evans_2003}.
+
+The damages caused by invasive species are often public and call for government intervention \citep{lovell_2006}. However, property rights can internalize the impacts and create an incentive for private control of invasive species. Invasive species commonly have negative impacts on native species through predation, competition, or other indirect effects \citep{davis_2003, gurevitch_2004}. If impacted native species provide benefits through harvesting (*i.e.* a commercially valuable fish stock) or non-consumptive use values (*i.e.* recreational diving), resource users may have an incentive to manage the invasion in order to minimize losses.
+
+# Model description
+
+I use a standard discrete-time model where I model a pair of native and invasive species. At the beginning of every period, the stock is observed, then some level of control is selected, and the remaining stock exerts damages and then grows. The equations are the following:
+
+Equation of motion:
+
+$$
+x_{t+1} = g(e_t)
+$$
+
+Where $e_t$ is the remaining stock from previous time step (*i.e.* $e_t \equiv x_t - h_t$). The remaining stock causes constant marginal public damages at $k$. Therefore, total damages are given by:
+
+$$
+\begin{split}
+\int_0^{e_t} k(s) &= \int_0^{e_t}k \;ds \\
+&= ke_t
+\end{split}
+$$
+
+The marginal cost of control is downward sloping $c(s)$. Therefore, the total cost of control is given by integrating this between the initial stock size at that time ($x_t$) and the remaining after control (*i.e.* $e_t$):
+
+$$
+\int_{e_t}^{x_t}{c(s)} \;ds
+$$
+
+Therefore, the total costs to society are given by:
+
+$$
+\begin{split}
+\phi(x_t, e_t) &= \int_0^{e_t} k(s) \;ds + \int_{e_t}^{x_t}{c(s)} \;ds \\
+&= ke_t + \int_{e_t}^{x_t}{c(s)} \;ds
+\end{split}
+$$
+
+The first term in the right-hand side represents the cost of damages and the second term the cost of control. Our current "damage function" assumes a constant marginal impact from remaining stock size. Therefore, our total costs can be shown by the graphical representation of the problem in Figure \ref{fig:graph}.
+
+```{r, fig.height = 3, fig.width = 4, fig.cap = "\\label{fig:graph}Illustration of marginal costs of control and damage. The area under each curve show the total cost of control (blue) and damage (red)."}
+
+k <- 25
+c <- -0.08
+
+tibble(s = 0:100) %>% 
+  mutate(k = k,
+         c = 60 * exp(c*s) + 5,
+         k_under = ifelse(s <= 14, k, NA),
+         c_under = ifelse(between(s, 14, 80), c, NA)) %>% 
+  ggplot(aes(x = s)) +
+  geom_ribbon(aes(ymin = 0, ymax = k_under), fill = "red", color = "red", alpha = 0.5) +
+  geom_ribbon(aes(ymin = 0, ymax = c_under), fill = "blue", color = "blue", alpha = 0.5) +
+  geom_line(aes(y = k), size = 1) +
+  geom_line(aes(y = c), size = 1) +
+  annotate(geom = "text", x = 50, y = k + 2.5, label = "dmg = k") +
+  annotate(geom = "text", x = 50, y = c + 5, label = "cost = theta c(s)") +
+  geom_vline(xintercept = 14, linetype = "dashed") +
+  geom_vline(xintercept = 80, linetype = "dashed") +
+  scale_x_continuous(label = NULL) +
+  scale_y_continuous(label = NULL) +
+  xlab("Stock (s)") + 
+  ylab("MC") +
+  theme_minimal()
+```
+
+The social planer would then seek to minimize the present value of total costs by optimally selecting the control at every time step. Therefore, the dynamic programming equation is given by:
+
+$$
+\begin{split}
+V_t(x_t) &= \min_{e_t}{\phi(x_t, e_t) + \delta V_{t+1}(x_{t+1})}\\
+&\text{s.t.} \\
+x_{t+1} &= g(e_t)
+\end{split}
+$$
+
+# Optimal control
+
+## Social planer
+
+The set up of this particular model is uninteresting because there is no spatial component or heterogeneity in the costs and impacts. Using this simplified model, we can estimate an equation that meets what was posed in Figure 1. Therefore, the control would simply be given by taking first order conditions of the minimization problem above.
+
+Assuming the world ends next time step, the social planer would seek to balance costs of damages of remaining stock and costs of control. Therefore, the optimal remaining stock size would be given by:
+
+$$
+\begin{split}
+k_i - c(e_t) &= 0 \\
+k_i &= c(e_t) \\
+\text{Assume } c(\dot{}) \text{is invertible} \\
+e^*_t &= c^{-1}\left(k\right)
+\end{split}
+$$
+
+## Private owner
+
+This model does not explicitly model the second species (*i.e.* the native one). However, we can think of the marginal damages of $ke_t$ as the loss in profits to predation by the invasive species. One could argue that the damages incurred by a private owner would be less than the total damages if there are additional negative impacts. In this case, we could scale the marginal damages like $\phi ke_t$ and the private owner would focus on controlling based on this scaled damage function where $\phi \in (0,1)$. In this case, the total damages are therefore explained by:
+
+
+$$
+\phi(x_t, e_t) = \phi ke_t + \int_{e_t}^{x_t}{c(s)} \;ds
+$$
+
+Therefore, the optimal control is given by 
+
+$$e^*_t = c^{-1}\left(\phi k\right)$$
+
+To differentiate from the previous $e_t^*$, we'll denote the private optimum control as $\hat e_t^*$. Since $\phi$ is a number between 0 and 1, this implies that the private control will be equal to or less than the social optimum(*i.e.* $\hat e_t^* \leq e_t^*$). In this case, the private owner reduces stock size down to $\hat e_t^*$. By doing so, they forgo damages given by:
+
+$$\int_{\hat e_t^*}^{x_t} \phi k \;ds$$
+
+By bringing the population down to $\hat e_t^*$, the private owner will have prevented a portion of the social damages by:
+
+$$
+\begin{split}
+&\int_{\hat e_t^*}^{x_t}  k \;ds - \int_{\hat e_t^*}^{x_t} \phi k \;ds \\
+&\int_{\hat e_t^*}^{x_t} (1-\phi) k \;ds
+\end{split}
+$$
+
+This would imply that the total costs of control to the social planner have been reduced, and are given by:
+
+$$
+\int_{e_t^*}^{\hat e_t^*}{c(s)} \;ds
+$$
+
+Intuitively, when $\phi = 1$ the private and optimal level of control would be the same (*i.e.* $\hat e_t^* = e_t^*$), and the integral above would then be $0$.
+
+Assuming a $\phi = 0.5$, the previous diagram in Fig 1 would be re-drawn as Figure 2.
+
+```{r, fig.height = 3, fig.width = 4, fig.cap = "\\label{fig:graph}Illustration of marginal costs of control and damage with the presence of property rights."}
+k <- 25
+c <- -0.08
+phi <- 0.5
+k2 <- phi * k
+
+tibble(s = 0:100) %>% 
+  mutate(k = k,
+         c = 60 * exp(c*s) + 5,
+         k2 = phi * k,
+         k_under = ifelse(s <= 14, k, NA),
+         k2_under = ifelse(s <= 25, k2, NA),
+         c_under = ifelse(between(s, 14, 80), c, NA),
+         c2_under = ifelse(between(s, 25, 80), c, NA),
+         k_no = ifelse(between(s, 25, 80), k, NA),
+         k_yes = ifelse(between(s, 25, 80), k2, NA)) %>% 
+  ggplot(aes(x = s)) +
+  geom_ribbon(aes(ymin = 0, ymax = k_under), fill = "red", color = "red", alpha = 0.3) +
+  geom_ribbon(aes(ymin = 0, ymax = c_under), fill = "blue", color = "blue", alpha = 0.3) +
+  geom_ribbon(aes(ymin = 0, ymax = k2_under), fill = "red", color = "red") +
+  geom_ribbon(aes(ymin = 0, ymax = c2_under), fill = "blue", color = "blue") +
+  geom_ribbon(aes(ymin = k2, ymax = k_no), fill = "green", color = "green", alpha = 0.3) +
+  geom_ribbon(aes(ymin = c, ymax = k_yes), fill = "green", color = "green") +
+  geom_line(aes(y = k), size = 1) +
+  geom_line(aes(y = k2), size = 1) +
+  geom_line(aes(y = c), size = 1) +
+  annotate(geom = "text", x = 50, y = k + 2.5, label = "dmg = k") +
+  annotate(geom = "text", x = 50, y = k2 + 2.5, label = "dmg == phi~k", parse = T) +
+  annotate(geom = "text", x = 50, y = c + 5, label = "cost = theta c(s)") +
+  geom_vline(xintercept = 14, linetype = "dashed") +
+  geom_vline(xintercept = 25, linetype = "dashed") +
+  geom_vline(xintercept = 80, linetype = "dashed") +
+  scale_x_continuous(label = NULL) +
+  scale_y_continuous(label = NULL) +
+  xlab("Stock (s)") + 
+  ylab("MC") +
+  theme_minimal()
+```
+
+From right to left we see in solid blue the private costs of control, and in solid green (plus the solid blue) the forgone private damages. At the same time, this reduction in stock size yields a reduction in total damages, shown in transparent green. The private damages are given by the solid red square. In this case, the presence of property rights achieves a significant part of the control. In order to achieve the social optimum, the social planner must control down to where $k = c(s)$ (transparent blue triangle).
+
+# Conclusions and further work
+
+This exercise represents an oversimplification of the final model I plan to develop. However, it shows the mechanisms in which private incentives may help control an invasive species. The level of private control is governed by what portion of the damages are internalized (through the $\phi$ parameter), and the shape of the cost of control.
+
+When $phi < 1$, additional control can be achieved by private owners if there is an additional incentive. This can take the form of a bounty, provided by the social planner, or the existence of a market where the invasive species can be sold. I plan to extend this work by explicitly modelling two species with a classic predator-prey model where the invasive species feeds on the native and where each species has a demand curve. Then I will compare and contrast how the assignment of property rights to one, both, or neither species results in different steady-state densities.
+
+\clearpage
+
+An example of this is the invasive lionfish (*Pterois volitans*) in the Caribbean. Governments and non-profit organizations have sought to reduce lionfish densities through removal programs and incentivizing its consumption \citep{chin_2016}. In some cases, these have shown to significantly reduce --but not quite eliminate-- lionfish abundances at local scales \citep{deleon_2013,sandel_2015}. The feasibility of establishing fisheries through lionfish removal programs has been extensively evaluated through field observations and empirical modeling \citep{barbour_2011,morris_2011,deleon_2013,johnston_2015,sandel_2015,usseglio_2017}. Complete eradication of lionfish through fishing is unlikely because of their rapid recovery rates and ongoing recruitment to shallow-water areas from persistent populations in mesophotic ecosystems \citep{barbour_2011,andradibrown_2017}. However, promoting lionfish consumption might create a level of demand capable of incentivizing a stable fishery while controlling shallow-water populations to low-enough levels, thus creating alternative livelihoods and avoiding further impacts to local biota.
+
+```{r, out.width = "200px", fig.cap = "Lionfish fillets sold in Miami, FL.", fig.align = "center"}
+knitr::include_graphics(here::here("img", "pvol.png"))
+```
+
+\clearpage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
